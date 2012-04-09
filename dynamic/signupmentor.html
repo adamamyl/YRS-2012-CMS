@@ -1,0 +1,172 @@
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <title>Furion Demo</title>
+    <meta name="description" content="A quick demo of the sheer power of Furion.">
+    <meta name="author" content="GridFusions.com / Lawrence Job">
+    <!-- Le HTML5 shim, for IE6-8 support of HTML elements -->
+    <!--[if lt IE 9]>
+      <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <!-- Le styles -->
+    <link href="interface/bootstrap/css/bootstrap.css" rel="stylesheet">
+    <style>
+      body {
+        padding-top: 60px; /* 60px to make the container go all the way to the bottom of the topbar */
+      }
+    </style>
+    <link href="interface/bootstrap/css/bootstrap-responsive.css" rel="stylesheet">
+    <!-- Le fav and touch icons -->
+    <link rel="shortcut icon" href="interface/bootstrap/images/favicon.ico">
+    <link rel="apple-touch-icon" href="interface/bootstrap/images/apple-touch-icon.png">
+    <link rel="apple-touch-icon" sizes="72x72" href="interface/bootstrap/images/apple-touch-icon-72x72.png">
+    <link rel="apple-touch-icon" sizes="114x114" href="interface/bootstrap/images/apple-touch-icon-114x114.png">
+    <script type="text/javascript" src="//maps.googleapis.com/maps/api/js?sensor=false"></script>
+    <script type="text/javascript">
+		var mapcentre = new google.maps.LatLng(51.507222, -0.1275);
+		var markerloc = new google.maps.LatLng(51.507222, -0.1275);
+		var marker;
+		var map;
+		
+		function init_map() {
+			var mapOptions = {
+				zoom: 8,
+				mapTypeId: google.maps.MapTypeId.ROADMAP,
+				center: mapcentre
+			};
+			
+			map = new google.maps.Map(document.getElementById("map_canvas"),
+					mapOptions);
+				  
+			marker = new google.maps.Marker({
+				map:map,
+				draggable:true,
+				animation: google.maps.Animation.DROP,
+				position: markerloc
+			});
+			//google.maps.event.addListener(marker, 'click', toggleBounce);
+			
+			google.maps.event.addListener(marker, 'position_changed', markerMoved);
+		}
+		
+		function toggleBounce() {
+			
+			if (marker.getAnimation() != null) {
+				marker.setAnimation(null);
+			} else {
+				marker.setAnimation(google.maps.Animation.BOUNCE);
+			}
+		}
+		
+		function markerMoved() {
+			$('#latlng').val(marker.getPosition());
+		}
+		
+	</script>
+  </head>
+  <body onload="init_map()">
+
+    <div class="container">
+      	<form action="data/signup.php?type=mentor" method="post" id="login" class="form-horizontal">
+        <fieldset>
+          <legend>Sign Up to Mentor at YRS 2012</legend>
+          <div class="control-group">
+            <label class="control-label" for="name">Your Name</label>
+            <div class="controls">
+              <input type="text" class="input-xlarge" id="name" name="name">
+              <p class="help-block">First and last please.</p>
+            </div>
+          </div>
+          
+          <div class="control-group">
+            <label class="control-label" for="email">Email Address</label>
+            <div class="controls">
+              <input type="email" class="input-xlarge" id="email" name="email">
+              <p class="help-block">This will be our primary form of communication.</p>
+            </div>
+          </div>
+          
+          <div class="control-group">
+            <label class="control-label" for="telno">Telephone Number</label>
+            <div class="controls">
+              <input type="tel" class="input-xlarge" id="telno" name="telno">
+              <p class="help-block">Although we'll normally email you, we may need to call you.</p>
+            </div>
+          </div>
+          
+          <div class="control-group">
+            <label class="control-label" for="geekcred">Geeky Credentials</label>
+            <div class="controls">
+              <textarea class="input-xlarge" id="geekcred" name="geekcred" rows="6"></textarea>
+              <p class="help-block">Your geek credentials &amp; why you're interested in helping a team of aspiring young hackers.<br />(Please include a quick overview of what you do professionally!)</p>
+            </div>
+          </div>
+          
+          <div class="control-group">
+            <label class="control-label" for="city">Nearest City</label>
+            <div class="controls">
+              <input type="text" class="input-xlarge" id="city" name="city">
+              <p class="help-block">Make this one that you can travel to. Otherwise, just enter the name of your town.</p>
+            </div>
+          </div>      
+              
+          <div class="control-group">
+            <label class="control-label" for="city">Geography</label>
+            <div class="controls">
+          		<div id="map_canvas" style="width: 500px; height: 400px;">map div</div>
+                <input type="hidden" class="input-xlarge" id="latlng" name="latlng" value="(51.507218661100346, -0.12750000000005457)">
+              <p class="help-block">Drop the pin to represent the area in which you live.</p>
+            </div>
+          </div>
+          
+          <style type="text/css">
+		  #map_canvas img {
+			max-width: none;
+			}
+		  </style>
+          
+                        
+          <div class="control-group">
+            <label class="control-label" for="twitter">Twitter Username</label>
+            <div class="controls">
+              <div class="input-prepend">
+                  <span class="add-on">@</span>
+                  <input type="text" class="input-xlarge" id="twitter" name="twitter">
+              </div>
+              <p class="help-block">If you have one&hellip;</p>
+            </div>
+          </div>
+          
+          <div class="control-group">
+            <label class="control-label" for="referrer">How You Heard About Us</label>
+            <div class="controls">
+                  <input type="text" class="input-xlarge" id="referrer" name="referrer">
+              <p class="help-block">Where did you hear about Young Rewired State?</p>
+            </div>
+          </div>
+          
+          <div class="control-group">
+            <label class="control-label" for="notes">Notes</label>
+            <div class="controls">
+              <textarea class="input-xlarge" id="notes" name="notes" rows="3"></textarea>
+              <p class="help-block">Any comments, suggestions or questions are welcome!</p>
+            </div>
+          </div>
+          
+          <div class="form-actions">
+            <button type="submit" class="btn btn-primary">Submit Application</button>
+          </div>
+        </fieldset>
+        </form>
+      
+    </div> <!-- /container -->
+    <!-- Le javascript
+    ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+    <script src="interface/bootstrap/js/jquery.js"></script>
+    <script src="interface/bootstrap/js/bootstrap.js"></script>
+    <script src="interface/bootstrap/js/bootstrap-dropdown.js"></script>
+  </body>
+</html>
